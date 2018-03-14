@@ -6,14 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * @author teyma
+ * @since 11/03/2018
+ */
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Car {
+public class AttributeValue {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
-    private @NonNull String name;
+
+    private @NonNull
+    String value;
+
+    private @NonNull String code;
 }

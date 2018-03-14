@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author teyma
+ * @since 11/03/2018
+ */
 @Configuration
 public class EcomImpexBuilderConfig {
 
