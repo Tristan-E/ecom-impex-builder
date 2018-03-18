@@ -27,10 +27,10 @@ public class ImpexExporter {
         classificationAttributeValues = new HashSet<>();;
     }
 
-    private Set<PcmUnivers> univers;
-    private Set<PcmFamily> families;
-    private Set<PcmSubFamily> subFamilies;
-    private Set<PcmSubSubFamily> subSubFamilies;
+    private Set<PcmCategory> univers;
+    private Set<PcmCategory> families;
+    private Set<PcmCategory> subFamilies;
+    private Set<PcmCategory> subSubFamilies;
     private Set<CategoryCategoryRelation> categoryToCategory;
     private Set<ClassificationClass> classificationClasses;
     private Set<ClassificationAttribute> classificationAttributes;

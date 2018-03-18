@@ -26,6 +26,8 @@ public class Category {
     @Id @GeneratedValue
     private Long id;
 
+    private String code;
+
     private @NonNull String name;
 
     @OneToMany(fetch = FetchType.LAZY)

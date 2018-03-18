@@ -6,14 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @author : teyma
- * @since : 18/03/2018
+ * @author teyma
+ * @since 18/03/2018
  */
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class PcmFamily {
+public class PcmCategory {
     private String code;
     private String name;
     private String externalCode;

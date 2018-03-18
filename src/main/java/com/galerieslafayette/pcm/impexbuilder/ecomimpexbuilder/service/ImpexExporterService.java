@@ -16,20 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImpexExporterService {
 
-    private PcmUniversMapper pcmUniversMapper;
-    private PcmFamilyMapper pcmFamilyMapper;
-    private PcmSubFamilyMapper pcmSubFamilyMapper;
-    private PcmSubSubFamilyMapper pcmSubSubFamilyMapper;
+    private PcmCategoryMapper pcmCategoryMapper;
     private ClassificationAttributeMapper classificationAttributeMapper;
     private ClassificationAttributeValueMapper classificationAttributeValueMapper;
 
-    public ImpexExporterService(PcmUniversMapper pcmUniversMapper, PcmFamilyMapper pcmFamilyMapper,
-                               PcmSubFamilyMapper pcmSubFamilyMapper, PcmSubSubFamilyMapper pcmSubSubFamilyMapper, ClassificationAttributeMapper classificationAttributeMapper,
+    public ImpexExporterService(PcmCategoryMapper pcmCategoryMapper, ClassificationAttributeMapper classificationAttributeMapper,
                                ClassificationAttributeValueMapper classificationAttributeValueMapper) {
-        this.pcmUniversMapper = pcmUniversMapper;
-        this.pcmFamilyMapper = pcmFamilyMapper;
-        this.pcmSubFamilyMapper = pcmSubFamilyMapper;
-        this.pcmSubSubFamilyMapper = pcmSubSubFamilyMapper;
+        this.pcmCategoryMapper = pcmCategoryMapper;
         this.classificationAttributeMapper = classificationAttributeMapper;
         this.classificationAttributeValueMapper = classificationAttributeValueMapper;
     }
@@ -51,20 +44,7 @@ public class ImpexExporterService {
             );
         }
 
-        switch (category.getType()) {
-            case PU:
-                impexExporter.getUnivers().add(pcmUniversMapper.categoryToPcmUnivers(category));
-                break;
-            case PF:
-                impexExporter.getFamilies().add(pcmFamilyMapper.categoryToPcmFamily(category));
-                break;
-            case PSF:
-                impexExporter.getSubFamilies().add(pcmSubFamilyMapper.categoryToPcmSubFamily(category));
-                break;
-            case PSSF:
-                impexExporter.getSubSubFamilies().add(pcmSubSubFamilyMapper.categoryToPcmSubSubFamily(category));
-                break;
-        }
+        addCatagoryToExporter(category, impexExporter);
 
         for (Attribute attribute : category.getAttributes()) {
             impexExporter.getClassificationAttributes().add(
@@ -76,6 +56,23 @@ public class ImpexExporterService {
                         classificationAttributeValueMapper.attributeValueToClassificationAttributeValue(value)
                 );
             }
+        }
+    }
+
+    private void addCatagoryToExporter(Category category, ImpexExporter impexExporter) {
+        switch (category.getType()) {
+            case PU:
+                impexExporter.getUnivers().add(pcmCategoryMapper.categoryToPcmCategory(category));
+                break;
+            case PF:
+                impexExporter.getFamilies().add(pcmCategoryMapper.categoryToPcmCategory(category));
+                break;
+            case PSF:
+                impexExporter.getSubFamilies().add(pcmCategoryMapper.categoryToPcmCategory(category));
+                break;
+            case PSSF:
+                impexExporter.getSubSubFamilies().add(pcmCategoryMapper.categoryToPcmCategory(category));
+                break;
         }
     }
 }

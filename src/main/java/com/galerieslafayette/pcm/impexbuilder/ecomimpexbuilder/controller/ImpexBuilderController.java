@@ -1,12 +1,10 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.controller;
 
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dto.ImpexBuilderDTO;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.WrongCategoryTypeException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service.ImpexBuilderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +25,10 @@ public class ImpexBuilderController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity buildImpex(@RequestBody ImpexBuilderDTO impexBuilderDTO) {
+    @PostMapping("/{categoryId}")
+    public ResponseEntity buildImpex(Long categoryId) {
         try {
-            service.buildImpex(impexBuilderDTO);
+            service.buildImpex(categoryId);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No category found.");
         } catch (WrongCategoryTypeException | FileNotFoundException e) {
