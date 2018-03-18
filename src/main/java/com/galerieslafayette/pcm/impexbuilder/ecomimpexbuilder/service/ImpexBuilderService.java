@@ -3,15 +3,11 @@ package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.CategoryRepository;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dto.ImpexBuilderDTO;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.WrongCategoryTypeException;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexExporter;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.CategoryType;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,12 +23,13 @@ import java.util.NoSuchElementException;
 public class ImpexBuilderService {
 
     private CategoryRepository categoryRepository;
+    private ImpexExporterService impexExporterService;
+    private ImpexWriterService impexWriterService;
 
-    @Value( "${impex.builder.csv.separator}" )
-    private char csvSeparator;
-
-    public ImpexBuilderService(CategoryRepository categoryRepository){
+    public ImpexBuilderService(CategoryRepository categoryRepository, ImpexExporterService impexExporterService, ImpexWriterService impexWriterService) {
         this.categoryRepository = categoryRepository;
+        this.impexExporterService = impexExporterService;
+        this.impexWriterService = impexWriterService;
     }
 
     public void buildImpex(ImpexBuilderDTO impexBuilderDTO) throws NoSuchElementException, WrongCategoryTypeException, IOException{
@@ -48,16 +45,7 @@ public class ImpexBuilderService {
             throw new FileNotFoundException("No folder file found with path " + impexFolderPath + ".");
         }
 
-        try (
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(impexBuilderDTO.getImpexFolder() + File.separator + "test.csv"));
-            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withDelimiter(csvSeparator).withRecordSeparator(csvSeparator + "\n"))
-        ) {
-            csvPrinter.printRecord("TEST1", "YO", "YA");
-            csvPrinter.printRecord("TEST2", "YO", "YA");
-            csvPrinter.printRecord("TEST3", "YO", "YA");
-
-            csvPrinter.flush();
-        }
-
+        ImpexExporter impexExporter = impexExporterService.buildImpexExporter(puCategory);
+        impexWriterService.write(impexExporter);
     }
 }

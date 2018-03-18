@@ -3,6 +3,8 @@ package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author teyma
@@ -11,10 +13,13 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Attribute {
+
+    public Attribute() {
+        this.values = new HashSet<>();
+    }
 
     @Id
     @GeneratedValue
@@ -28,5 +33,5 @@ public class Attribute {
     private @NonNull AttributeType type;
 
     @OneToMany
-    private Collection<AttributeValue> values;
+    private Set<AttributeValue> values;
 }

@@ -3,7 +3,10 @@ package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author teyma
@@ -11,10 +14,14 @@ import java.util.Collection;
  */
 @Entity
 @Getter @Setter
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Category {
+
+    public Category () {
+        children = new HashSet<>();
+        attributes = new HashSet<>();
+    }
 
     @Id @GeneratedValue
     private Long id;
@@ -22,11 +29,11 @@ public class Category {
     private @NonNull String name;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private Collection<Category> children;
+    private Set<Category> children;
 
     @Enumerated(EnumType.STRING)
     private CategoryType type;
 
     @ManyToMany
-    private Collection<Attribute> attributes;
+    private Set<Attribute> attributes;
 }
