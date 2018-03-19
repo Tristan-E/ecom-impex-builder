@@ -1,5 +1,6 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.controller;
 
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.RecursionDepthException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.WrongCategoryTypeException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service.ImpexBuilderService;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class ImpexBuilderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No category found.");
         } catch (WrongCategoryTypeException | FileNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (IOException e) {
+        } catch (IOException | RecursionDepthException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occured while building impex.");
         }
         return ResponseEntity.status(HttpStatus.OK).build();

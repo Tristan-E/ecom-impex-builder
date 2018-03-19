@@ -10,12 +10,12 @@ INSERT INTO attribute_values(attribute_id, values_id) VALUES
     (1,1),
     (1,2);
 
-INSERT INTO category(id, name, type, parent_id) VALUES
-    (1,'Loisirs','PU',null),
-    (2,'Sport','PF',1),
-    (3,'Raquette','PSF',2),
-    (4,'Tenis','PSSF',3),
-    (5,'Squash','PSSF',3);
+INSERT INTO category(id, code, name, type) VALUES
+    (1,'PU100','Loisirs','PU'),
+    (2,'PF1000','Sport','PF'),
+    (3,'PSF1000','Raquette','PSF'),
+    (4,'PSSF3000','Tenis','PSSF'),
+    (5,'PSSF3001','Squash','PSSF');
 
 INSERT INTO category_children VALUES
     (1,2),
