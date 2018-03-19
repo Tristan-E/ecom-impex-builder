@@ -1,6 +1,7 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service;
 
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.CategoryRepository;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.RecursionDepthException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.WrongCategoryTypeException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexExporter;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
@@ -27,7 +28,7 @@ public class ImpexBuilderService {
         this.impexWriterService = impexWriterService;
     }
 
-    public void buildImpex(Long categoryId) throws NoSuchElementException, WrongCategoryTypeException, IOException{
+    public void buildImpex(Long categoryId) throws NoSuchElementException, WrongCategoryTypeException, IOException, RecursionDepthException{
         Category puCategory = categoryRepository.findById(categoryId).orElseThrow(NoSuchElementException::new);
 
         if (CategoryType.PU != puCategory.getType()) {

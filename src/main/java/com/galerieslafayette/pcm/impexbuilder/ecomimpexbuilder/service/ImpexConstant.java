@@ -9,6 +9,11 @@ public final class ImpexConstant {
     public static final String PF_FILE_NAME = "1_RPU_PF.impex";
     public static final String PSF_FILE_NAME = "2_RPU_PSF.impex";
     public static final String PSSF_FILE_NAME = "3_RPU_PSSF.impex";
+    public static final String MAPPING_CATEGORY_FILE_NAME = "4_RPU_MAPPING_CATEGORY.impex";
+    public static final String CLASSIFICATION_FILE_NAME = "5_RPU_CLASSIFICATION.impex";
+    public static final String ATTRIBUTE_FILE_NAME = "6_RPU_ATTRIBUTE.impex";
+    public static final String ATTRIBUTE_VALUE_FILE_NAME = "7_RPU_ATTRIBUTE_VALUE.impex";
+
 
     public static final String MACRO_DEFINITION_1 = "########################################";
     public static final String MACRO_DEFINITION_2 = "####       MACRO DEFINITION         ####";
@@ -33,7 +38,7 @@ public final class ImpexConstant {
     public static final String INSERT_CATEGORY_TO_CATEGORY = "INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories";
     public static final String INSERT_CLASSIFICATION_CLASS = "INSERT_UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]; name[lang = $lang]; allowedPrincipals(uid)[default = 'customergroup']";
     public static final String INSERT_CLASSIFICATION_ATTRIBUTE = "INSERT_UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; externalId ; $classSystemVersion";
-    public static final String INSERT_CLASSIFICATION_ATTRIBUTE_VALUE_= "INSERT_UPDATE ClassificationAttributeValue;code[unique=true];name[lang=$lang];$classSystemVersion";
+    public static final String INSERT_CLASSIFICATION_ATTRIBUTE_VALUE= "INSERT_UPDATE ClassificationAttributeValue;code[unique=true];name[lang=$lang];$classSystemVersion";
     public static final String INSERT_CLASS_ATTRIBUTE_ASSIGNEMENT = "INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;attributeType(code);mandatory;attributeValues(code,$classSystemVersion)";
     public static final String INSERT_CATEGORY_TO_CLASSIFICATION = "INSERT_UPDATE CategoryCategoryRelation;qualifier;reverseSequenceNumber;sequenceNumber;source(catalogVersion(catalog(id),version),code)[unique=true,allownull=true];target(catalogVersion(catalog(id),version),code)[unique=true,allownull=true]";
 }
