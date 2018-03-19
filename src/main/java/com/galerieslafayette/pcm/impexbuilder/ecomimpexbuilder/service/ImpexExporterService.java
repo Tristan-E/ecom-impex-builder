@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class ImpexExporterService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImpexWriterService.class);
+    private static final int maxDepth = 4;
 
     private PcmCategoryMapper pcmCategoryMapper;
     private ClassificationAttributeMapper classificationAttributeMapper;
@@ -60,7 +61,7 @@ public class ImpexExporterService {
      * @throws RecursionDepthException
      */
     private void handleCategories(Category category, ImpexExporter impexExporter, int depth) throws RecursionDepthException {
-        if(depth > 4) {
+        if(depth > maxDepth) {
             throw new RecursionDepthException("Categories should only be on 4 levels (PU,PF,PSF,PSSF).");
         }
 
