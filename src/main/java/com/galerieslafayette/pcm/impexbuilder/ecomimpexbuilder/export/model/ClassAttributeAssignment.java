@@ -1,12 +1,13 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model;
 
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.AttributeValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author : teyma
@@ -17,9 +18,14 @@ import java.util.ArrayList;
 @ToString
 @EqualsAndHashCode
 public class ClassAttributeAssignment {
+
+    public ClassAttributeAssignment() {
+        this.attributeValuesCodes = new HashSet<>();
+    }
+
     private String classCode;
-    private ClassificationAttribute attribute;
+    private String attributeCode;
     private String attributeType;
     private boolean mandatory;
-    private ArrayList<AttributeValue> attributeValues;
+    private Set<String> attributeValuesCodes;
 }

@@ -24,7 +24,10 @@ public class ImpexExporter {
         categoryToCategory = new HashSet<>();
         classificationClasses = new HashSet<>();
         classificationAttributes = new HashSet<>();;
-        classificationAttributeValues = new HashSet<>();;
+        classificationAttributeValues = new HashSet<>();
+        classAttributeAssignments = new HashSet<>();
+        classificationToCategory = new HashSet<>();
+
     }
 
     private Set<PcmCategory> univers;
@@ -35,4 +38,6 @@ public class ImpexExporter {
     private Set<ClassificationClass> classificationClasses;
     private Set<ClassificationAttribute> classificationAttributes;
     private Set<ClassificationAttributeValue> classificationAttributeValues;
+    private Set<ClassAttributeAssignment> classAttributeAssignments;
+    private Set<CategoryCategoryRelation> classificationToCategory;
 }

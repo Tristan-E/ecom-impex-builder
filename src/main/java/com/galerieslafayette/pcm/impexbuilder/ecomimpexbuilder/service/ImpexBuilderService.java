@@ -1,6 +1,7 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service;
 
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.CategoryRepository;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dto.ImpexBuilderDto;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.RecursionDepthException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.WrongCategoryTypeException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexExporter;
@@ -28,14 +29,14 @@ public class ImpexBuilderService {
         this.impexWriterService = impexWriterService;
     }
 
-    public void buildImpex(Long categoryId) throws NoSuchElementException, WrongCategoryTypeException, IOException, RecursionDepthException{
-        Category puCategory = categoryRepository.findById(categoryId).orElseThrow(NoSuchElementException::new);
+    public void buildImpex(ImpexBuilderDto impexBuilderDto) throws NoSuchElementException, WrongCategoryTypeException, IOException, RecursionDepthException{
+        Category puCategory = categoryRepository.findById(impexBuilderDto.getCategoryId()).orElseThrow(NoSuchElementException::new);
 
         if (CategoryType.PU != puCategory.getType()) {
             throw new WrongCategoryTypeException("Building Impex should be called on Universe (PU), the category found was " + puCategory.getType() + ".");
         }
 
-        ImpexExporter impexExporter = impexExporterService.buildImpexExporter(puCategory);
+        ImpexExporter impexExporter = impexExporterService.buildImpexExporter(puCategory, impexBuilderDto.getClassificationStartNumber());
         impexWriterService.write(impexExporter);
     }
 }

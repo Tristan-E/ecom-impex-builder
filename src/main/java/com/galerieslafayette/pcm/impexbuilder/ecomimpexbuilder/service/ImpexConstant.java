@@ -13,11 +13,12 @@ public final class ImpexConstant {
     public static final String CLASSIFICATION_FILE_NAME = "5_RPU_CLASSIFICATION.impex";
     public static final String ATTRIBUTE_FILE_NAME = "6_RPU_ATTRIBUTE.impex";
     public static final String ATTRIBUTE_VALUE_FILE_NAME = "7_RPU_ATTRIBUTE_VALUE.impex";
+    public static final String CLASS_ATTRIBUTE_ASSIGNEMENT_FILE_NAME = "8_RPU_MAPPING_CLA_ATTRIBUTE.impex";
+    public static final String MAPPING_CLA_CATEGORY_FILE_NAME = "9_RPU_MAPPING_CLA_CATEGORY.impex";
 
-
-    public static final String MACRO_DEFINITION_1 = "########################################";
-    public static final String MACRO_DEFINITION_2 = "####       MACRO DEFINITION         ####";
-    public static final String MACRO_DEFINITION_3 = "########################################";
+    public static final String MACRO_DEFINITION = "########################################\n"
+                                                + "####       MACRO DEFINITION         ####\n"
+                                                + "########################################";
 
     public static final String RPU_PRODUCT_CATALOG = "$productCatalog=glpcmProductCatalog";
     public static final String RPU_CATALOG_VERSION = "$catalogVersion=catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])";
@@ -26,7 +27,7 @@ public final class ImpexConstant {
     public static final String CATEGORIES = "$categories=target(code, $catalogVersion)[unique=true]";
     public static final String RPU_CLASSIFICATION_CATALOG = "$classificationCatalog = glpcmClassification";
     public static final String RPU_CLASS_CATALOG_VERSION = "$classCatalogVersion = catalogversion(catalog(id[default = '$classificationCatalog']), version[default = '1.0'])[unique = true, default = '$classificationCatalog:1.0']";
-    public static final String RPU_CLASS_SYSTEM_VERSION = " $classSystemVersion = systemVersion(catalog(id[default = '$classificationCatalog']), version[default = '1.0'])[unique = true]";
+    public static final String RPU_CLASS_SYSTEM_VERSION = "$classSystemVersion = systemVersion(catalog(id[default = '$classificationCatalog']), version[default = '1.0'])[unique = true]";
 
     public static final String RPU_CLASSIFICATION_CLASS = "$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]";
     public static final String RPU_CLASSIFICATION_ATTRIBUTE = "$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]";

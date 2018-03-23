@@ -1,10 +1,8 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service;
 
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexExporter;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexPrinter;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.*;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.QuoteMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +46,8 @@ public class ImpexWriterService {
         writeClassifications(impexExporter.getClassificationClasses());
         writeAttributes(impexExporter.getClassificationAttributes());
         writeAttributeValues(impexExporter.getClassificationAttributeValues());
+        writeClassAttributeAssignement(impexExporter.getClassAttributeAssignments());
+        writeClassificationToCatgory(impexExporter.getClassificationToCategory());
 
         long end = System.currentTimeMillis();
         long time = end - start;
@@ -58,142 +58,193 @@ public class ImpexWriterService {
     private void writePcmCategory(Set<PcmCategory> pcmCategories, String insertHeader, String fileName) throws IOException {
         try (
                 BufferedWriter writer = initBufferWriter(fileName);
-                CSVPrinter csvPrinter = initCsvPrinter(writer)
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printCategoryHeader(csvPrinter);
+            printCategoryHeader(impexPrinter);
 
-            csvPrinter.printRecord(insertHeader);
+            impexPrinter.println(insertHeader);
 
             for (PcmCategory category : pcmCategories) {
-                csvPrinter.printRecord(EMPTY_STRING, category.getCode(), category.getName(), category.getExternalCode());
+                impexPrinter.printRecord(category.getCode(), category.getName(), category.getExternalCode());
             }
-            csvPrinter.flush();
+            impexPrinter.flush();
         }
     }
 
     private void writeMappingCategories(Set<CategoryCategoryRelation> categoryToCategorySet) throws IOException {
         try (
                 BufferedWriter writer = initBufferWriter(ImpexConstant.MAPPING_CATEGORY_FILE_NAME);
-                CSVPrinter csvPrinter = initCsvPrinter(writer)
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printCategoryToCategoryHeader(csvPrinter);
+            printCategoryToCategoryHeader(impexPrinter);
 
-            csvPrinter.printRecord(ImpexConstant.INSERT_CATEGORY_TO_CATEGORY);
+            impexPrinter.println(ImpexConstant.INSERT_CATEGORY_TO_CATEGORY);
 
             for (CategoryCategoryRelation categoryToCategory : categoryToCategorySet) {
-                csvPrinter.printRecord(EMPTY_STRING, categoryToCategory.getSourceCode(), categoryToCategory.getDestinationCode());
+                impexPrinter.printRecord(categoryToCategory.getSourceCode(), categoryToCategory.getDestinationCode());
             }
-            csvPrinter.flush();
+            impexPrinter.flush();
         }
     }
 
     private void writeClassifications(Set<ClassificationClass> classifications) throws IOException {
         try (
                 BufferedWriter writer = initBufferWriter(ImpexConstant.CLASSIFICATION_FILE_NAME);
-                CSVPrinter csvPrinter = initCsvPrinter(writer)
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printClassificationHeader(csvPrinter);
+            printClassificationHeader(impexPrinter);
 
-            csvPrinter.printRecord(ImpexConstant.INSERT_CLASSIFICATION_CLASS);
+            impexPrinter.println(ImpexConstant.INSERT_CLASSIFICATION_CLASS);
 
             for (ClassificationClass classification : classifications) {
-                csvPrinter.printRecord(EMPTY_STRING, EMPTY_STRING, classification.getCode(), classification.getName());
+                impexPrinter.printRecord(EMPTY_STRING, classification.getCode(), classification.getName());
             }
-            csvPrinter.flush();
+            impexPrinter.flush();
         }
     }
 
     private void writeAttributes(Set<ClassificationAttribute> attributes) throws IOException{
         try (
                 BufferedWriter writer = initBufferWriter(ImpexConstant.ATTRIBUTE_FILE_NAME);
-                CSVPrinter csvPrinter = initCsvPrinter(writer)
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printCategoryToCategoryHeader(csvPrinter);
+            printCategoryToCategoryHeader(impexPrinter);
 
-            csvPrinter.printRecord(ImpexConstant.INSERT_CLASSIFICATION_ATTRIBUTE);
+            impexPrinter.println(ImpexConstant.INSERT_CLASSIFICATION_ATTRIBUTE);
 
             for (ClassificationAttribute attribute : attributes) {
-                csvPrinter.printRecord(EMPTY_STRING, attribute.getCode(), attribute.getName(), attribute.getExternalId());
+                impexPrinter.printRecord(attribute.getCode(), attribute.getName(), attribute.getExternalId());
             }
-            csvPrinter.flush();
+            impexPrinter.flush();
         }
     }
 
     private void writeAttributeValues(Set<ClassificationAttributeValue> attributeValues) throws IOException{
         try (
                 BufferedWriter writer = initBufferWriter(ImpexConstant.ATTRIBUTE_VALUE_FILE_NAME);
-                CSVPrinter csvPrinter = initCsvPrinter(writer)
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printAttributeAndAttributeValueHeader(csvPrinter);
+            printAttributeAndAttributeValueHeader(impexPrinter);
 
-            csvPrinter.printRecord(ImpexConstant.INSERT_CLASSIFICATION_ATTRIBUTE_VALUE);
+            impexPrinter.println(ImpexConstant.INSERT_CLASSIFICATION_ATTRIBUTE_VALUE);
 
             for (ClassificationAttributeValue attributeValue : attributeValues) {
-                csvPrinter.printRecord(EMPTY_STRING, attributeValue.getCode(), attributeValue.getValue());
+                impexPrinter.printRecord(attributeValue.getCode(), attributeValue.getValue());
             }
-            csvPrinter.flush();
+            impexPrinter.flush();
         }
     }
 
-    private void printCategoryHeader(CSVPrinter csvPrinter) throws IOException {
-        printMacroComment(csvPrinter);
+    private void writeClassAttributeAssignement(Set<ClassAttributeAssignment> classAttributeAssignments) throws IOException{
+        try (
+                BufferedWriter writer = initBufferWriter(ImpexConstant.CLASS_ATTRIBUTE_ASSIGNEMENT_FILE_NAME);
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
+        ) {
+            printClassificationAssignementHeader(impexPrinter);
 
-        csvPrinter.println();
+            impexPrinter.println(ImpexConstant.INSERT_CLASS_ATTRIBUTE_ASSIGNEMENT);
 
-        csvPrinter.printRecord(ImpexConstant.RPU_PRODUCT_CATALOG);
-        csvPrinter.printRecord(ImpexConstant.RPU_CATALOG_VERSION);
-        csvPrinter.printRecord(ImpexConstant.LANGUAGE);
-
-        csvPrinter.println();
+            for (ClassAttributeAssignment classAttributeAssignment : classAttributeAssignments) {
+                impexPrinter.printRecord(
+                        classAttributeAssignment.getClassCode(),
+                        classAttributeAssignment.getAttributeCode(),
+                        classAttributeAssignment.getAttributeType(),
+                        classAttributeAssignment.isMandatory(),
+                        classAttributeAssignment.getAttributeValuesCodes()
+                );
+            }
+            impexPrinter.flush();
+        }
     }
 
-    private void printCategoryToCategoryHeader(CSVPrinter csvPrinter) throws IOException {
-        printMacroComment(csvPrinter);
+    private void writeClassificationToCatgory(Set<CategoryCategoryRelation> classToCategories) throws IOException{
+        try (
+                BufferedWriter writer = initBufferWriter(ImpexConstant.MAPPING_CLA_CATEGORY_FILE_NAME);
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
+        ) {
 
-        csvPrinter.println();
+            impexPrinter.println(ImpexConstant.INSERT_CATEGORY_TO_CLASSIFICATION);
 
-        csvPrinter.printRecord(ImpexConstant.RPU_PRODUCT_CATALOG);
-        csvPrinter.printRecord(ImpexConstant.RPU_CATALOG_VERSION);
-        csvPrinter.printRecord(ImpexConstant.SUPER_CATEGORIES);
-        csvPrinter.printRecord(ImpexConstant.CATEGORIES);
-
-        csvPrinter.println();
+            for (CategoryCategoryRelation classToCategory : classToCategories) {
+                impexPrinter.printRecord(
+                        "CategoryCategoryRelation",
+                        0,
+                        0,
+                        "glpcmClassification:1.0:" + classToCategory.getSourceCode(),
+                        "glpcmProductCatalog:Staged:" + classToCategory.getDestinationCode()
+                );
+            }
+            impexPrinter.flush();
+        }
     }
 
-    private void printAttributeAndAttributeValueHeader(CSVPrinter csvPrinter) throws IOException{
-        printMacroComment(csvPrinter);
+    private void printCategoryHeader(ImpexPrinter impexPrinter) throws IOException {
+        printMacroComment(impexPrinter);
 
-        csvPrinter.println();
+        impexPrinter.println();
 
-        csvPrinter.printRecord(ImpexConstant.RPU_PRODUCT_CATALOG);
-        csvPrinter.printRecord(ImpexConstant.RPU_CLASS_SYSTEM_VERSION);
-        csvPrinter.printRecord(ImpexConstant.LANGUAGE);
+        impexPrinter.println(ImpexConstant.RPU_PRODUCT_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CATALOG_VERSION);
+        impexPrinter.println(ImpexConstant.LANGUAGE);
 
-        csvPrinter.println();
+        impexPrinter.println();
     }
 
-    private void printClassificationHeader(CSVPrinter csvPrinter) throws IOException{
-        printMacroComment(csvPrinter);
+    private void printCategoryToCategoryHeader(ImpexPrinter impexPrinter) throws IOException {
+        printMacroComment(impexPrinter);
 
-        csvPrinter.println();
+        impexPrinter.println();
 
-        csvPrinter.printRecord(ImpexConstant.RPU_CLASSIFICATION_CATALOG);
-        csvPrinter.printRecord(ImpexConstant.RPU_CLASS_CATALOG_VERSION);
-        csvPrinter.printRecord(ImpexConstant.LANGUAGE);
+        impexPrinter.println(ImpexConstant.RPU_PRODUCT_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CATALOG_VERSION);
+        impexPrinter.println(ImpexConstant.SUPER_CATEGORIES);
+        impexPrinter.println(ImpexConstant.CATEGORIES);
 
-        csvPrinter.println();
+        impexPrinter.println();
     }
 
-    private void printMacroComment(CSVPrinter csvPrinter) throws IOException {
-        csvPrinter.printRecord(ImpexConstant.MACRO_DEFINITION_1);
-        csvPrinter.printRecord(ImpexConstant.MACRO_DEFINITION_2);
-        csvPrinter.printRecord(ImpexConstant.MACRO_DEFINITION_3);
+    private void printAttributeAndAttributeValueHeader(ImpexPrinter impexPrinter) throws IOException{
+        printMacroComment(impexPrinter);
+
+        impexPrinter.println();
+
+        impexPrinter.println(ImpexConstant.RPU_PRODUCT_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CLASS_SYSTEM_VERSION);
+        impexPrinter.println(ImpexConstant.LANGUAGE);
+
+        impexPrinter.println();
     }
 
-    private CSVPrinter initCsvPrinter(BufferedWriter writer) throws IOException {
-        return new CSVPrinter(writer, CSVFormat.DEFAULT.withDelimiter(csvSeparator).withEscape('\\').withQuoteMode(QuoteMode.NONE));
+    private void printClassificationHeader(ImpexPrinter impexPrinter) throws IOException{
+        printMacroComment(impexPrinter);
+
+        impexPrinter.println();
+
+        impexPrinter.println(ImpexConstant.RPU_CLASSIFICATION_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CLASS_CATALOG_VERSION);
+        impexPrinter.println(ImpexConstant.LANGUAGE);
+
+        impexPrinter.println();
     }
 
+    private void printClassificationAssignementHeader(ImpexPrinter impexPrinter) throws IOException{
+        printMacroComment(impexPrinter);
+
+        impexPrinter.println();
+
+        impexPrinter.println(ImpexConstant.RPU_CLASSIFICATION_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CLASS_CATALOG_VERSION);
+        impexPrinter.println(ImpexConstant.RPU_CLASS_SYSTEM_VERSION);
+        impexPrinter.println(ImpexConstant.RPU_CLASSIFICATION_CLASS);
+        impexPrinter.println(ImpexConstant.RPU_CLASSIFICATION_ATTRIBUTE);
+
+        impexPrinter.println();
+    }
+
+    private void printMacroComment(ImpexPrinter impexPrinter) throws IOException {
+        impexPrinter.println(ImpexConstant.MACRO_DEFINITION);
+    }
+    
     private BufferedWriter initBufferWriter(String fileName) throws IOException {
         final String filePath = folderPath + File.separator + fileName;
         LOG.info("Writing output file in {}", filePath);
