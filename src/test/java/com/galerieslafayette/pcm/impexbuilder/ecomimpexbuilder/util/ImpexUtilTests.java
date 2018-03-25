@@ -12,4 +12,10 @@ public class ImpexUtilTests {
         Assertions.assertThat(ImpexUtil.keepNumericAndUnderscore("éer1fdggh2_ççàùùm3gfdfdgfv")).isEqualTo("12_3");
     }
 
+    @Test
+    public void testToCamelCaseShouldNotFail() {
+        Assertions.assertThat(ImpexUtil.toCamelCase("THIS_IS_SPARTA")).isEqualTo("thisIsSparta");
+        Assertions.assertThat(ImpexUtil.toCamelCase("this_is_sparta")).isEqualTo("thisIsSparta");
+    }
+
 }

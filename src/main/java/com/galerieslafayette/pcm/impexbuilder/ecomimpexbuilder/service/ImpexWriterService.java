@@ -48,6 +48,7 @@ public class ImpexWriterService {
         writeAttributeValues(impexExporter.getClassificationAttributeValues());
         writeClassAttributeAssignement(impexExporter.getClassAttributeAssignments());
         writeClassificationToCatgory(impexExporter.getClassificationToCategory());
+        writeFields(impexExporter.getUntypedFields(), impexExporter.getTypedFields());
 
         long end = System.currentTimeMillis();
         long time = end - start;
@@ -178,6 +179,52 @@ public class ImpexWriterService {
         }
     }
 
+    private void writeFields(Set<UntypedField> untypedFields, Set<TypedField> typedFields) throws IOException {
+        try (
+                BufferedWriter writer = initBufferWriter(ImpexConstant.FIELD_FILE_NAME);
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
+        ) {
+            printFieldHeader(impexPrinter);
+
+            impexPrinter.println(ImpexConstant.INSERT_UNTYPED_FIELD_HEADING);
+
+            for (UntypedField untypedField: untypedFields) {
+                impexPrinter.printRecord(
+                        untypedField.getCode(),
+                        untypedField.getName(),
+                        untypedField.isMandatory(),
+                        untypedField.isActivated(),
+                        untypedField.getObjectType(),
+                        untypedField.getFieldSetterStrategyBeanName(),
+                        untypedField.getDependencies(),
+                        untypedField.getUniverses(),
+                        untypedField.getGroup(),
+                        untypedField.getClassificationAttribute()
+                );
+            }
+
+            impexPrinter.println(ImpexConstant.INSERT_TYPED_FIELD_HEADING);
+
+            for (TypedField typedField: typedFields) {
+                impexPrinter.printRecord(
+                        typedField.getCode(),
+                        typedField.getName(),
+                        typedField.isMandatory(),
+                        typedField.isActivated(),
+                        typedField.getObjectType(),
+                        typedField.getStrategyBeanName(),
+                        typedField.getFieldSetterStrategyBeanName(),
+                        typedField.getDependencies(),
+                        typedField.getUniverses(),
+                        typedField.getGroup(),
+                        typedField.getClassificationAttribute()
+                );
+            }
+
+            impexPrinter.flush();
+        }
+    }
+
     private void printCategoryHeader(ImpexPrinter impexPrinter) throws IOException {
         printMacroComment(impexPrinter);
 
@@ -240,6 +287,17 @@ public class ImpexWriterService {
 
         impexPrinter.println();
     }
+
+    private void printFieldHeader(ImpexPrinter impexPrinter) throws IOException{
+        printMacroComment(impexPrinter);
+
+        impexPrinter.println();
+
+        impexPrinter.println("TODO FEIGNASSE");
+
+        impexPrinter.println();
+    }
+
 
     private void printMacroComment(ImpexPrinter impexPrinter) throws IOException {
         impexPrinter.println(ImpexConstant.MACRO_DEFINITION);

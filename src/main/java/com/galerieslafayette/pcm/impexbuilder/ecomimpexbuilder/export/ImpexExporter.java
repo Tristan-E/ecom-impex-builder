@@ -4,6 +4,7 @@ import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.aspectj.weaver.TypeFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +28,8 @@ public class ImpexExporter {
         classificationAttributeValues = new HashSet<>();
         classAttributeAssignments = new HashSet<>();
         classificationToCategory = new HashSet<>();
-
+        untypedFields = new HashSet<>();
+        typedFields = new HashSet<>();
     }
 
     private Set<PcmCategory> univers;
@@ -40,4 +42,6 @@ public class ImpexExporter {
     private Set<ClassificationAttributeValue> classificationAttributeValues;
     private Set<ClassAttributeAssignment> classAttributeAssignments;
     private Set<CategoryCategoryRelation> classificationToCategory;
+    private Set<UntypedField> untypedFields;
+    private Set<TypedField> typedFields;
 }

@@ -15,6 +15,7 @@ public final class ImpexConstant {
     public static final String ATTRIBUTE_VALUE_FILE_NAME = "7_RPU_ATTRIBUTE_VALUE.impex";
     public static final String CLASS_ATTRIBUTE_ASSIGNEMENT_FILE_NAME = "8_RPU_MAPPING_CLA_ATTRIBUTE.impex";
     public static final String MAPPING_CLA_CATEGORY_FILE_NAME = "9_RPU_MAPPING_CLA_CATEGORY.impex";
+    public static final String FIELD_FILE_NAME = "10_RPU_FIELD.impex";
 
     public static final String MACRO_DEFINITION = "########################################\n"
                                                 + "####       MACRO DEFINITION         ####\n"
@@ -42,4 +43,6 @@ public final class ImpexConstant {
     public static final String INSERT_CLASSIFICATION_ATTRIBUTE_VALUE= "INSERT_UPDATE ClassificationAttributeValue;code[unique=true];name[lang=$lang];$classSystemVersion";
     public static final String INSERT_CLASS_ATTRIBUTE_ASSIGNEMENT = "INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;attributeType(code);mandatory;attributeValues(code,$classSystemVersion)";
     public static final String INSERT_CATEGORY_TO_CLASSIFICATION = "INSERT_UPDATE CategoryCategoryRelation;qualifier;reverseSequenceNumber;sequenceNumber;source(catalogVersion(catalog(id),version),code)[unique=true,allownull=true];target(catalogVersion(catalog(id),version),code)[unique=true,allownull=true]";
+    public static final String INSERT_UNTYPED_FIELD_HEADING = "INSERT_UPDATE UntypedField; code[unique = true]; label; mandatory; activated; objectType(code); fieldSetterStrategyBeanName; dependencies(code); universes(code); group(code); classificationAttribute(code)";
+    public static final String INSERT_TYPED_FIELD_HEADING = "INSERT_UPDATE TypedField; code[unique = true]; label; mandatory; activated; objectType(code);strategyBeanName;fieldSetterStrategyBeanName; dependencies(code); universes(code); group(code);";
 }

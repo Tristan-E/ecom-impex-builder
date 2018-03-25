@@ -28,13 +28,16 @@ public class ImpexExporterService {
     private ClassificationAttributeMapper classificationAttributeMapper;
     private ClassificationAttributeValueMapper classificationAttributeValueMapper;
     private ClassificationClassMapper classificationClassMapper;
+    private FieldMapper fieldMapper;
 
     public ImpexExporterService(PcmCategoryMapper pcmCategoryMapper, ClassificationAttributeMapper classificationAttributeMapper,
-                               ClassificationAttributeValueMapper classificationAttributeValueMapper, ClassificationClassMapper classificationClassMapper) {
+                                ClassificationAttributeValueMapper classificationAttributeValueMapper, ClassificationClassMapper classificationClassMapper,
+                                FieldMapper fieldMapper) {
         this.pcmCategoryMapper = pcmCategoryMapper;
         this.classificationAttributeMapper = classificationAttributeMapper;
         this.classificationAttributeValueMapper = classificationAttributeValueMapper;
         this.classificationClassMapper = classificationClassMapper;
+        this.fieldMapper = fieldMapper;
     }
 
     public ImpexExporter buildImpexExporter(Category puCategory, int classificationStartNumber) throws RecursionDepthException{
@@ -102,6 +105,19 @@ public class ImpexExporterService {
             impexExporter.getClassificationAttributes().add(
                     classificationAttributeMapper.attributeToClassificationAttribute(attribute)
             );
+
+            switch (attribute.getType()) {
+                case ENUM:
+                    impexExporter.getTypedFields().add(
+                      fieldMapper.attributeToTypedField(attribute)
+                    );
+                    break;
+                case STRING:
+                    impexExporter.getUntypedFields().add(
+                            fieldMapper.attributeToUntypedField(attribute)
+                    );
+                    break;
+            }
 
             for (AttributeValue value : attribute.getValues()) {
 
