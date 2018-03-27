@@ -4,6 +4,8 @@ import com.google.common.base.CaseFormat;
 
 public final class ImpexUtil {
 
+    private ImpexUtil(){}
+
     public static String keepNumericAndUnderscore(String str) {
         return str.replaceAll("[^0-9_]*","");
     }

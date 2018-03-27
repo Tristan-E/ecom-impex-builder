@@ -13,11 +13,11 @@ import java.util.Iterator;
  * @since 22/03/2018
  */
 public class ImpexPrinter implements Flushable, Closeable {
-    private static final String RECORD_SEPARATOR = "\r\n";;
+    private static final String RECORD_SEPARATOR = "\r\n";
     private static final String SEPARATOR = ";";
     private final Appendable out;
 
-    public ImpexPrinter(Appendable out) throws IOException {
+    public ImpexPrinter(Appendable out) {
         Assert.notNull(out, "out");
         this.out = out;
     }
@@ -86,38 +86,5 @@ public class ImpexPrinter implements Flushable, Closeable {
         }
 
         this.println();
-    }
-
-    public void printRecords(Iterable<?> values) throws IOException {
-        Iterator var2 = values.iterator();
-
-        while(var2.hasNext()) {
-            Object value = var2.next();
-            if(value instanceof Object[]) {
-                this.printRecord((Object[])((Object[])value));
-            } else if(value instanceof Iterable) {
-                this.printRecord((Iterable)value);
-            } else {
-                this.printRecord(new Object[]{value});
-            }
-        }
-
-    }
-
-    public void printRecords(Object... values) throws IOException {
-        Object[] var2 = values;
-        int var3 = values.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            Object value = var2[var4];
-            if(value instanceof Object[]) {
-                this.printRecord((Object[])((Object[])value));
-            } else if(value instanceof Iterable) {
-                this.printRecord((Iterable)value);
-            } else {
-                this.printRecord(new Object[]{value});
-            }
-        }
-
     }
 }

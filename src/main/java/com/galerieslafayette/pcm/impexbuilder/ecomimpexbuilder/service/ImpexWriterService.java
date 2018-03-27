@@ -184,8 +184,6 @@ public class ImpexWriterService {
                 BufferedWriter writer = initBufferWriter(ImpexConstant.FIELD_FILE_NAME);
                 ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printFieldHeader(impexPrinter);
-
             impexPrinter.println(ImpexConstant.INSERT_UNTYPED_FIELD_HEADING);
 
             for (UntypedField untypedField: untypedFields) {
@@ -203,6 +201,7 @@ public class ImpexWriterService {
                 );
             }
 
+            impexPrinter.println();
             impexPrinter.println(ImpexConstant.INSERT_TYPED_FIELD_HEADING);
 
             for (TypedField typedField: typedFields) {
@@ -287,17 +286,6 @@ public class ImpexWriterService {
 
         impexPrinter.println();
     }
-
-    private void printFieldHeader(ImpexPrinter impexPrinter) throws IOException{
-        printMacroComment(impexPrinter);
-
-        impexPrinter.println();
-
-        impexPrinter.println("TODO FEIGNASSE");
-
-        impexPrinter.println();
-    }
-
 
     private void printMacroComment(ImpexPrinter impexPrinter) throws IOException {
         impexPrinter.println(ImpexConstant.MACRO_DEFINITION);

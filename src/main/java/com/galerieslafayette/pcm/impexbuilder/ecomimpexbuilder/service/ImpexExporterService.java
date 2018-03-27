@@ -1,12 +1,12 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.service;
 
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dto.ImpexBuilderDto;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.exception.RecursionDepthException;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.ImpexExporter;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.CategoryCategoryRelation;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.ClassAttributeAssignment;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.mapper.*;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Attribute;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.AttributeType;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.AttributeValue;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
 import org.slf4j.Logger;
@@ -106,17 +106,14 @@ public class ImpexExporterService {
                     classificationAttributeMapper.attributeToClassificationAttribute(attribute)
             );
 
-            switch (attribute.getType()) {
-                case ENUM:
-                    impexExporter.getTypedFields().add(
-                      fieldMapper.attributeToTypedField(attribute)
-                    );
-                    break;
-                case STRING:
-                    impexExporter.getUntypedFields().add(
-                            fieldMapper.attributeToUntypedField(attribute)
-                    );
-                    break;
+            if(AttributeType.ENUM.equals(attribute.getType())) {
+                impexExporter.getTypedFields().add(
+                        fieldMapper.attributeToTypedField(attribute)
+                );
+            } else {
+                impexExporter.getUntypedFields().add(
+                        fieldMapper.attributeToUntypedField(attribute)
+                );
             }
 
             for (AttributeValue value : attribute.getValues()) {

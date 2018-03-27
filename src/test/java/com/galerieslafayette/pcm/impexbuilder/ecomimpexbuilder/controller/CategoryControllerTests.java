@@ -26,6 +26,7 @@ public class CategoryControllerTests {
         Mockito.verify(categoryRepository).findAll();
     }
 
+    @Test
     public void testGetCategoryShouldFindOne() {
         Long testId = 13L;
         categoryController.getCategory(testId);
@@ -33,6 +34,7 @@ public class CategoryControllerTests {
         Mockito.verify(categoryRepository).findById(testId);
     }
 
+    @Test
     public void testAddCategoryShouldSave() {
         Category category = Mockito.mock(Category.class);
         categoryController.addCategory(category);
@@ -40,6 +42,7 @@ public class CategoryControllerTests {
         Mockito.verify(categoryRepository).save(category);
     }
 
+    @Test
     public void testUpdateCategoryShouldSave() {
         Category category = Mockito.mock(Category.class);
         categoryController.updateCategory(category);
@@ -47,7 +50,8 @@ public class CategoryControllerTests {
         Mockito.verify(categoryRepository).save(category);
     }
 
-    public void deleteCategory(Long id) {
+    @Test
+    public void deleteCategory() {
         Long testId = 132L;
         categoryController.deleteCategory(testId);
 

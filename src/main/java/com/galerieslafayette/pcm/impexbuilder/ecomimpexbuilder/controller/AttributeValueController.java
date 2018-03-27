@@ -1,10 +1,7 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.controller;
 
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.AttributeValueRepository;
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.CategoryRepository;
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Attribute;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.AttributeValue;
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -45,6 +42,5 @@ public class AttributeValueController {
     @DeleteMapping("/{id}")
     public void deleteAttributeValue(Long id) {
         repository.deleteById(id);
-
     }
 }

@@ -1,8 +1,6 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.mapper;
 
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.ClassificationAttribute;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.ClassificationClass;
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Attribute;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
 import org.springframework.stereotype.Component;
 
