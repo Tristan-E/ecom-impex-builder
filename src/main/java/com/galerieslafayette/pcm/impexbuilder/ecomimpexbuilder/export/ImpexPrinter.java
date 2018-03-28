@@ -61,19 +61,6 @@ public class ImpexPrinter implements Flushable, Closeable {
         out.append(RECORD_SEPARATOR);
     }
 
-    public void printRecord(Iterable<?> values) throws IOException {
-        out.append(SEPARATOR);
-
-        Iterator var2 = values.iterator();
-
-        while(var2.hasNext()) {
-            Object value = var2.next();
-            this.print(value);
-        }
-
-        this.println();
-    }
-
     public void printRecord(Object... values) throws IOException {
         out.append(SEPARATOR);
 
