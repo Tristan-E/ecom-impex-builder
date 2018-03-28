@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClassificationClassMapper {
     public ClassificationClass categoryToClassificationClass(Category category) {
+        if (category == null) {
+            return null;
+        }
+
         ClassificationClass classificationClass = new ClassificationClass();
         // TODO
         classificationClass.setCode("TODO");
