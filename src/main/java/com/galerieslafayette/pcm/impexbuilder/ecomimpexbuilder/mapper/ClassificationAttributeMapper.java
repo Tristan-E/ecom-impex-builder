@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClassificationAttributeMapper {
     public ClassificationAttribute attributeToClassificationAttribute(Attribute attribute) {
+        if (attribute == null) {
+            return null;
+        }
         ClassificationAttribute classificationAttribute = new ClassificationAttribute();
         classificationAttribute.setCode(attribute.getCode());
         classificationAttribute.setName(attribute.getName());
