@@ -1,5 +1,7 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.mapper;
 
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.ClassificationAttributeValue;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.AttributeValue;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +21,19 @@ public class ClassificationAttributeValueMapperTests {
     private ClassificationAttributeValueMapper classificationAttributeValueMapper;
 
     @Test
-    public void testAttributeValueToClassificationAttributeValue() {
-        // TODO Unit tests
-        Assertions.assertThat(true).isFalse();
+    public void testAttributeValueToClassificationAttributeValueShouldReturnNull() {
+        Assertions.assertThat(classificationAttributeValueMapper.attributeValueToClassificationAttributeValue(null)).isNull();
+    }
+
+    @Test
+    public void testAttributeValueToClassificationAttributeValueShouldWork() {
+        AttributeValue attributeValue = new AttributeValue();
+        attributeValue.setCode("Attribute value code");
+        attributeValue.setValue("Attribute value value, LOLILOL");
+
+        ClassificationAttributeValue classificationAttributeValue = classificationAttributeValueMapper.attributeValueToClassificationAttributeValue(attributeValue);
+
+        Assertions.assertThat(classificationAttributeValue.getCode()).isEqualTo(attributeValue.getCode());
+        Assertions.assertThat(classificationAttributeValue.getValue()).isEqualTo(attributeValue.getValue());
     }
 }
