@@ -18,12 +18,18 @@ public class FieldMapper {
     private static final String TYPED_FIELD_VALUE_LOADER_STRATEGY = "TypedFieldValueLoaderStrategy";
 
     public UntypedField attributeToUntypedField(Attribute attribute) {
+        if (attribute == null) {
+            return null;
+        }
         UntypedField untypedField= new UntypedField();
         fillField(untypedField, attribute);
         return untypedField;
     }
 
     public TypedField attributeToTypedField(Attribute attribute) {
+        if (attribute == null) {
+            return null;
+        }
         TypedField typedField = new TypedField();
         fillField(typedField, attribute);
         typedField.setStrategyBeanName(ImpexUtil.toCamelCase(attribute.getCode()) + TYPED_FIELD_VALUE_LOADER_STRATEGY);
