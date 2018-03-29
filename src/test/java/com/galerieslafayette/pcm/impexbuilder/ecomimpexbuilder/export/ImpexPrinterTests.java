@@ -2,8 +2,10 @@ package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -14,9 +16,6 @@ import java.io.Writer;
  * @since 27/03/18.
  */
 public class ImpexPrinterTests {
-
-    @InjectMocks
-    private ImpexPrinter impexPrinter;
 
     private static final String TO_PRINT = "RPU is soooo cool ... Or not.";
     private static final String RECORD_SEPARATOR = "\r\n";
