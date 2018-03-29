@@ -32,8 +32,18 @@ public class FieldMapper {
         }
         TypedField typedField = new TypedField();
         fillField(typedField, attribute);
-        typedField.setStrategyBeanName(ImpexUtil.toCamelCase(attribute.getCode()) + TYPED_FIELD_VALUE_LOADER_STRATEGY);
+        typedField.setStrategyBeanName(toCamelCaseAndSuffix(attribute.getCode(), TYPED_FIELD_VALUE_LOADER_STRATEGY));
         return typedField;
+    }
+
+    /**
+     * Protected to be mocked
+     * @param attributeCode
+     * @param suffix
+     * @return
+     */
+    protected String toCamelCaseAndSuffix(String attributeCode, String suffix) {
+        return ImpexUtil.toCamelCase(attributeCode) + suffix;
     }
 
     private <T extends Field> void fillField(T field, Attribute attribute) {
@@ -42,7 +52,7 @@ public class FieldMapper {
         field.setMandatory(false);
         field.setActivated(true);
         field.setObjectType("PRODUCT");
-        field.setFieldSetterStrategyBeanName(ImpexUtil.toCamelCase(attribute.getCode()) + SETTER_STRATEGY);
+        field.setFieldSetterStrategyBeanName(toCamelCaseAndSuffix(attribute.getCode(), SETTER_STRATEGY));
         field.setDependencies("PSSF");
         field.setUniverses("TODO");
         field.setGroup("SPECIFIC_ATTRIBUTES");

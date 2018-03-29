@@ -4,11 +4,13 @@ import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.Fiel
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.TypedField;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export.model.UntypedField;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Attribute;
-import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.util.ImpexUtil;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,11 +22,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class FieldMapperTests {
 
-    @InjectMocks
+    @InjectMocks @Spy
     private FieldMapper fieldMapper;
+    private static final String TO_CAMEL_CASE_IS_CALLED = "TO_CAMEL_CASE_IS_CALLED";
 
-    private static final String SETTER_STRATEGY = "SetterStrategy";
-    private static final String TYPED_FIELD_VALUE_LOADER_STRATEGY = "TypedFieldValueLoaderStrategy";
+    @Before
+    public void setUp() throws Exception {
+        Mockito.doReturn(TO_CAMEL_CASE_IS_CALLED).when(fieldMapper).toCamelCaseAndSuffix(Mockito.anyString(), Mockito.anyString());
+    }
 
     @Test
     public void testAttributeToUntypedFieldShouldReturnNull() {
@@ -48,7 +53,7 @@ public class FieldMapperTests {
         Attribute attribute = initAttribute();
         TypedField typedField = fieldMapper.attributeToTypedField(attribute);
         verifyFieldAttribute(typedField, attribute);
-        Assertions.assertThat(typedField.getStrategyBeanName()).isEqualTo(ImpexUtil.toCamelCase(attribute.getCode()) + TYPED_FIELD_VALUE_LOADER_STRATEGY);
+        Assertions.assertThat(typedField.getStrategyBeanName()).isEqualTo(TO_CAMEL_CASE_IS_CALLED);
     }
 
     private Attribute initAttribute() {
@@ -67,7 +72,7 @@ public class FieldMapperTests {
         Assertions.assertThat(field.isActivated()).isEqualTo(true);
         // TODO Implement object type
         Assertions.assertThat(field.getObjectType()).isEqualTo("PRODUCT");
-        Assertions.assertThat(field.getFieldSetterStrategyBeanName()).isEqualTo(ImpexUtil.toCamelCase(attribute.getCode()) + SETTER_STRATEGY);
+        Assertions.assertThat(field.getFieldSetterStrategyBeanName()).isEqualTo(TO_CAMEL_CASE_IS_CALLED);
         // TODO Implement dependencies
         Assertions.assertThat(field.getDependencies()).isEqualTo("PSSF");
         // TODO Implement Universes
