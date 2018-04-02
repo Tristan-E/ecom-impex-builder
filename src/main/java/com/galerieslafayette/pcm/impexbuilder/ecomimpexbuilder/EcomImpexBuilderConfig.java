@@ -17,8 +17,13 @@ public class EcomImpexBuilderConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+                // TODO IS THIS NORMAL ?
+                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
+                        .allowedHeaders("*");
             }
         };
     }
+
+
+
 }

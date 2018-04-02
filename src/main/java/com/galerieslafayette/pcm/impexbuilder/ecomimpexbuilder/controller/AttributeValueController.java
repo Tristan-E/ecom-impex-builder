@@ -25,7 +25,7 @@ public class AttributeValueController {
     }
 
     @GetMapping("/{id}")
-    public AttributeValue getAttributeValue(Long id) {
+    public AttributeValue getAttributeValue(@PathVariable Long id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -40,7 +40,7 @@ public class AttributeValueController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAttributeValue(Long id) {
+    public void deleteAttributeValue(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }

@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category getCategory(Long id) {
+    public Category getCategory(@PathVariable Long id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(Long id) {
+    public void deleteCategory(@PathVariable Long id) {
         repository.deleteById(id);
 
     }
