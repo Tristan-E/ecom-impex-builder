@@ -2,9 +2,11 @@ package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.controller;
 
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.dao.CategoryRepository;
 import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.Category;
+import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.CategoryType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author teyma
@@ -42,6 +44,5 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
         repository.deleteById(id);
-
     }
 }
