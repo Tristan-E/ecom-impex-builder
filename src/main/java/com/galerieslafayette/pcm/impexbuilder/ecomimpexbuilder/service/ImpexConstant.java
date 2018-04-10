@@ -15,7 +15,8 @@ public final class ImpexConstant {
     public static final String ATTRIBUTE_VALUE_FILE_NAME = "7_RPU_ATTRIBUTE_VALUE.impex";
     public static final String CLASS_ATTRIBUTE_ASSIGNEMENT_FILE_NAME = "8_RPU_MAPPING_CLA_ATTRIBUTE.impex";
     public static final String MAPPING_CLA_CATEGORY_FILE_NAME = "9_RPU_MAPPING_CLA_CATEGORY.impex";
-    public static final String FIELD_FILE_NAME = "10_RPU_FIELD.impex";
+    public static final String MAPPING_CLA_CLA_FILE_NAME = "10_RPU_MAPPING_CLA_CLA.impex";
+    public static final String FIELD_FILE_NAME = "11_RPU_FIELD.impex";
 
     public static final String MACRO_DEFINITION = "########################################\n"
                                                 + "####       MACRO DEFINITION         ####\n"

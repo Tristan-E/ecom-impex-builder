@@ -47,7 +47,7 @@ public class ImpexExporterService {
         LOG.info("Start building impex exporter ...");
         long start = System.currentTimeMillis();
 
-        handleCategories(puCategory, impexExporter, categoryDepth, classificationStartNumber);
+        handleCategories(puCategory, impexExporter, categoryDepth, classificationStartNumber, null);
 
         long end = System.currentTimeMillis();
         long time = end - start;
@@ -65,15 +65,18 @@ public class ImpexExporterService {
      * @param depth
      * @throws RecursionDepthException
      */
-    private void handleCategories(Category category, ImpexExporter impexExporter, int depth, int classificationNumber) throws RecursionDepthException {
+    private void handleCategories(Category category, ImpexExporter impexExporter, int depth, int classificationNumber, String parentClassificationCode) throws RecursionDepthException {
         if (depth > MAX_DEPTH) {
             throw new RecursionDepthException("Categories should only be on 4 levels (PU,PF,PSF,PSSF).");
         }
 
         final String classificationCode = CLASSIFICATION_CODE_START + classificationNumber;
 
+        int childClassificationCode = classificationNumber;
         for (Category childCategory : category.getChildren()) {
-            handleCategories(childCategory, impexExporter, depth + 1, classificationNumber + 1);
+            childClassificationCode += 1;
+
+            handleCategories(childCategory, impexExporter, depth + 1, childClassificationCode, classificationCode);
 
             impexExporter.getCategoryToCategory().add(
                     new CategoryCategoryRelation(category.getCode(), childCategory.getCode())
@@ -82,13 +85,19 @@ public class ImpexExporterService {
 
         addCatagoryToExporter(category, impexExporter);
 
-        impexExporter.getClassificationClasses().add(classificationClassMapper.categoryToClassificationClass(category));
+        impexExporter.getClassificationClasses().add(classificationClassMapper.categoryToClassificationClass(category, classificationCode));
 
         addAttributeAndValueAndAssignementToExporter(category, impexExporter, classificationCode);
 
         impexExporter.getClassificationToCategory().add(
                 new CategoryCategoryRelation(classificationCode, category.getCode())
         );
+
+        if (parentClassificationCode != null) {
+            impexExporter.getClassificationToClassification().add(
+                    new CategoryCategoryRelation(parentClassificationCode, classificationCode)
+            );
+        }
     }
 
     private void addAttributeAndValueAndAssignementToExporter(Category category, ImpexExporter impexExporter, String classificationCode) {

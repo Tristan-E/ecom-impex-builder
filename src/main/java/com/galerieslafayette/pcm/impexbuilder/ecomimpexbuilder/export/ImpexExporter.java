@@ -28,6 +28,7 @@ public class ImpexExporter {
         classificationAttributeValues = new HashSet<>();
         classAttributeAssignments = new HashSet<>();
         classificationToCategory = new HashSet<>();
+        classificationToClassification = new HashSet<>();
         untypedFields = new HashSet<>();
         typedFields = new HashSet<>();
     }
@@ -42,6 +43,7 @@ public class ImpexExporter {
     private Set<ClassificationAttributeValue> classificationAttributeValues;
     private Set<ClassAttributeAssignment> classAttributeAssignments;
     private Set<CategoryCategoryRelation> classificationToCategory;
+    private Set<CategoryCategoryRelation> classificationToClassification;
     private Set<UntypedField> untypedFields;
     private Set<TypedField> typedFields;
 }

@@ -48,6 +48,7 @@ public class ImpexWriterService {
         writeAttributeValues(impexExporter.getClassificationAttributeValues());
         writeClassAttributeAssignement(impexExporter.getClassAttributeAssignments());
         writeClassificationToCatgory(impexExporter.getClassificationToCategory());
+        writeClassificationToClassification(impexExporter.getClassificationToClassification());
         writeFields(impexExporter.getUntypedFields(), impexExporter.getTypedFields());
 
         long end = System.currentTimeMillis();
@@ -153,6 +154,27 @@ public class ImpexWriterService {
                         classAttributeAssignment.getAttributeType(),
                         classAttributeAssignment.isMandatory(),
                         classAttributeAssignment.getAttributeValuesCodes()
+                );
+            }
+            impexPrinter.flush();
+        }
+    }
+
+    private void writeClassificationToClassification(Set<CategoryCategoryRelation> classToCategories) throws IOException{
+        try (
+                BufferedWriter writer = initBufferWriter(ImpexConstant.MAPPING_CLA_CLA_FILE_NAME);
+                ImpexPrinter impexPrinter = new ImpexPrinter(writer)
+        ) {
+
+            impexPrinter.println(ImpexConstant.INSERT_CATEGORY_TO_CLASSIFICATION);
+
+            for (CategoryCategoryRelation classToCategory : classToCategories) {
+                impexPrinter.printRecord(
+                        "CategoryCategoryRelation",
+                        0,
+                        0,
+                        "glpcmClassification:1.0:" + classToCategory.getSourceCode(),
+                        "glpcmClassification:1.0:" + classToCategory.getDestinationCode()
                 );
             }
             impexPrinter.flush();

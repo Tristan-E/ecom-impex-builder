@@ -22,19 +22,21 @@ public class ClassificationClassMapperTests {
 
     @Test
     public void testCategoryToClassificationClassShouldReturnNull() {
-        Assertions.assertThat(classificationClassMapper.categoryToClassificationClass(null)).isNull();
+        Assertions.assertThat(classificationClassMapper.categoryToClassificationClass(null, null)).isNull();
     }
 
     @Test
     public void testCategoryToClassificationClassShouldWork() {
+        final String classificationCode="CLA123";
+
         Category category = new Category();
         category.setName("This is the name");
         // TODO implement classification code
         category.setCode("TODO");
 
-        ClassificationClass classificationClass = classificationClassMapper.categoryToClassificationClass(category);
+        ClassificationClass classificationClass = classificationClassMapper.categoryToClassificationClass(category, classificationCode);
 
-        Assertions.assertThat(classificationClass.getCode()).isEqualTo(category.getCode());
+        Assertions.assertThat(classificationClass.getCode()).isEqualTo(classificationCode);
         Assertions.assertThat(classificationClass.getName()).isEqualTo(category.getName());
     }
 }

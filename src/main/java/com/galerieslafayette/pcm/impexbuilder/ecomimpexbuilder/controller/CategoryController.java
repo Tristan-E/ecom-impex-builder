@@ -6,7 +6,6 @@ import com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.model.CategoryTyp
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author teyma
@@ -44,5 +43,10 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping(value = "/type/{type}")
+    public Collection<Category> getCategoriesByType(@PathVariable CategoryType type) {
+        return repository.findByType(type);
     }
 }

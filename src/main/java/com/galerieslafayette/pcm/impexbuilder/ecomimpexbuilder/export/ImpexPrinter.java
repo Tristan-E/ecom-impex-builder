@@ -1,11 +1,13 @@
 package com.galerieslafayette.pcm.impexbuilder.ecomimpexbuilder.export;
 
+import com.google.common.collect.Iterables;
 import org.springframework.util.Assert;
 
 import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Inspired from org.apache.commons.csv.CSVPrinter
@@ -15,6 +17,8 @@ import java.util.Iterator;
 public class ImpexPrinter implements Flushable, Closeable {
     private static final String RECORD_SEPARATOR = "\r\n";
     private static final String SEPARATOR = ";";
+    private static final String COLLECTION_SEPARATOR = ",";
+
     private final Appendable out;
 
     public ImpexPrinter(Appendable out) {
@@ -26,14 +30,12 @@ public class ImpexPrinter implements Flushable, Closeable {
         if(this.out instanceof Closeable) {
             ((Closeable)this.out).close();
         }
-
     }
 
     public void flush() throws IOException {
         if(this.out instanceof Flushable) {
             ((Flushable)this.out).flush();
         }
-
     }
 
     private void print(Object value) throws IOException {
@@ -44,11 +46,13 @@ public class ImpexPrinter implements Flushable, Closeable {
     }
 
     private void printCollection(Iterable<?> values) throws IOException {
-        Iterator var2 = values.iterator();
-
-        while(var2.hasNext()) {
-            Object value = var2.next();
-            this.print(value);
+        if (!Iterables.isEmpty(values)) {
+            // Build a String with separator : value1,value2, ...
+            String valuesToString = String.join(
+                    COLLECTION_SEPARATOR,
+                    StreamSupport.stream(values.spliterator(), false).map(o -> o.toString()).collect(Collectors.toList())
+            );
+            this.print(valuesToString);
         }
     }
 
