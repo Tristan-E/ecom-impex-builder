@@ -34,9 +34,11 @@ public class Attribute {
 
     private @NonNull String code;
 
+    private String externalId;
+
     @Enumerated(EnumType.STRING)
     private @NonNull AttributeType type;
 
-    @OneToMany
+    @ManyToMany
     private Set<AttributeValue> values;
 }

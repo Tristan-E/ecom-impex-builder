@@ -44,6 +44,7 @@ public class TreeBuilderService {
         }
 
         TreeNodeDto mainNode = treeNodeMapper.categoryToTreeNodeDto(puCategory);
+        mainNode.getChildren().addAll(getAttributeNodes(puCategory.getAttributes()));
 
         handleCategories(puCategory, null, mainNode, 1);
         return mainNode;

@@ -4,8 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * @author teyma
@@ -17,11 +18,11 @@ import java.util.Set;
 public class TreeNodeDto {
 
     public TreeNodeDto() {
-        this.children = new HashSet<>();
+        this.children = new TreeSet<>(Comparator.comparing(TreeNodeDto::getType).thenComparing(TreeNodeDto::getName));
     }
 
     private String id;
     private String name;
-    private Set<TreeNodeDto> children;
+    private SortedSet<TreeNodeDto> children;
     private TreeNodeType type;
 }

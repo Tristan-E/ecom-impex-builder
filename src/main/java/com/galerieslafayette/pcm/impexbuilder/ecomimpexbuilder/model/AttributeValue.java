@@ -25,5 +25,7 @@ public class AttributeValue {
     private @NonNull
     String value;
 
+    private String externalId;
+
     private @NonNull String code;
 }
