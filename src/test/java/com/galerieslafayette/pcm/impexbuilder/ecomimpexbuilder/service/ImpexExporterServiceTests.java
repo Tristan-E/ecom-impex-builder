@@ -40,7 +40,7 @@ public class ImpexExporterServiceTests {
     public void testBuildImpexExporter() throws RecursionDepthException {
         Category puCategory = initPuCategory();
 
-        impexExporterService.buildImpexExporter(puCategory, 100);
+        impexExporterService.buildImpexExporter(puCategory);
 
         // TODO Unit tests
         Assertions.assertThat(true).isFalse();

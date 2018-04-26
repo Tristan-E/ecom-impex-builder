@@ -36,7 +36,7 @@ public class ImpexBuilderService {
             throw new WrongCategoryTypeException("Building Impex should be called on Universe (PU), the category found was " + puCategory.getType() + ".");
         }
 
-        ImpexExporter impexExporter = impexExporterService.buildImpexExporter(puCategory, impexBuilderDto.getClassificationStartNumber());
+        ImpexExporter impexExporter = impexExporterService.buildImpexExporter(puCategory);
         impexWriterService.write(impexExporter);
     }
 }

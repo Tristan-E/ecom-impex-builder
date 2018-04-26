@@ -13,5 +13,4 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class ImpexBuilderDto {
     private long categoryId;
-    private int classificationStartNumber;
 }

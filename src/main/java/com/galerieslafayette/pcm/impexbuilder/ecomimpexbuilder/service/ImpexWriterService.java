@@ -111,7 +111,7 @@ public class ImpexWriterService {
                 BufferedWriter writer = initBufferWriter(ImpexConstant.ATTRIBUTE_FILE_NAME);
                 ImpexPrinter impexPrinter = new ImpexPrinter(writer)
         ) {
-            printCategoryToCategoryHeader(impexPrinter);
+            printAttributeAndAttributeValueHeader(impexPrinter);
 
             impexPrinter.println(ImpexConstant.INSERT_CLASSIFICATION_ATTRIBUTE);
 
@@ -277,7 +277,7 @@ public class ImpexWriterService {
 
         impexPrinter.println();
 
-        impexPrinter.println(ImpexConstant.RPU_PRODUCT_CATALOG);
+        impexPrinter.println(ImpexConstant.RPU_CLASSIFICATION_CATALOG);
         impexPrinter.println(ImpexConstant.RPU_CLASS_SYSTEM_VERSION);
         impexPrinter.println(ImpexConstant.LANGUAGE);
 

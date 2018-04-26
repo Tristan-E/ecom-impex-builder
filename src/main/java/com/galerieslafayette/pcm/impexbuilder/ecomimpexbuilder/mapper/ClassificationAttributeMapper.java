@@ -17,7 +17,7 @@ public class ClassificationAttributeMapper {
         ClassificationAttribute classificationAttribute = new ClassificationAttribute();
         classificationAttribute.setCode(attribute.getCode());
         classificationAttribute.setName(attribute.getName());
-        classificationAttribute.setExternalId(attribute.getCode());
+        classificationAttribute.setExternalId(attribute.getExternalId());
         return classificationAttribute;
     }
 }

@@ -38,12 +38,12 @@ public final class ImpexConstant {
     public static final String INSERT_PF_HEADING = "INSERT_UPDATE PcmFamily;code[unique=true];name[lang=$lang];externalCode[unique=true];$catalogVersion";
     public static final String INSERT_PSF_HEADING = "INSERT_UPDATE PcmSubFamily;code[unique=true];name[lang=$lang];externalCode[unique=true];$catalogVersion";
     public static final String INSERT_PSSF_HEADING = "INSERT_UPDATE PcmSubSubFamily;code[unique=true];name[lang=$lang];externalCode[unique=true];$catalogVersion";
-    public static final String INSERT_CATEGORY_TO_CATEGORY = "INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories";
+    public static final String INSERT_CATEGORY_TO_CATEGORY = "INSERT_UPDATE CategoryCategoryRelation;$supercategories;$categories";
     public static final String INSERT_CLASSIFICATION_CLASS = "INSERT_UPDATE ClassificationClass; $classCatalogVersion; code[unique = true]; name[lang = $lang]; allowedPrincipals(uid)[default = 'customergroup']";
     public static final String INSERT_CLASSIFICATION_ATTRIBUTE = "INSERT_UPDATE ClassificationAttribute; code[unique = true]; name[lang = $lang]; externalId ; $classSystemVersion";
     public static final String INSERT_CLASSIFICATION_ATTRIBUTE_VALUE= "INSERT_UPDATE ClassificationAttributeValue;code[unique=true];name[lang=$lang];$classSystemVersion";
     public static final String INSERT_CLASS_ATTRIBUTE_ASSIGNEMENT = "INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;attributeType(code);mandatory;attributeValues(code,$classSystemVersion)";
     public static final String INSERT_CATEGORY_TO_CLASSIFICATION = "INSERT_UPDATE CategoryCategoryRelation;qualifier;reverseSequenceNumber;sequenceNumber;source(catalogVersion(catalog(id),version),code)[unique=true,allownull=true];target(catalogVersion(catalog(id),version),code)[unique=true,allownull=true]";
     public static final String INSERT_UNTYPED_FIELD_HEADING = "INSERT_UPDATE UntypedField; code[unique = true]; label; mandatory; activated; objectType(code); fieldSetterStrategyBeanName; dependencies(code); universes(code); group(code); classificationAttribute(code)";
-    public static final String INSERT_TYPED_FIELD_HEADING = "INSERT_UPDATE TypedField; code[unique = true]; label; mandatory; activated; objectType(code);strategyBeanName;fieldSetterStrategyBeanName; dependencies(code); universes(code); group(code);";
+    public static final String INSERT_TYPED_FIELD_HEADING = "INSERT_UPDATE TypedField; code[unique = true]; label; mandatory; activated; objectType(code);strategyBeanName;fieldSetterStrategyBeanName; dependencies(code); universes(code); group(code); classificationAttribute(code)";
 }

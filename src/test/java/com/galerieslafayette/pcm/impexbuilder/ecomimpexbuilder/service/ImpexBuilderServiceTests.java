@@ -60,7 +60,7 @@ public class ImpexBuilderServiceTests {
 
         Mockito.when(categoryRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(category));
 
-        Mockito.doThrow(RecursionDepthException.class).when(impexExporterService).buildImpexExporter(Mockito.any(), Mockito.anyInt());
+        Mockito.doThrow(RecursionDepthException.class).when(impexExporterService).buildImpexExporter(Mockito.any());
 
         impexBuilderService.buildImpex(new ImpexBuilderDto());
     }
@@ -71,7 +71,7 @@ public class ImpexBuilderServiceTests {
 
         Mockito.when(categoryRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(category));
 
-        Mockito.when(impexExporterService.buildImpexExporter(Mockito.any(), Mockito.anyInt())).thenReturn(new ImpexExporter());
+        Mockito.when(impexExporterService.buildImpexExporter(Mockito.any())).thenReturn(new ImpexExporter());
 
         Mockito.doThrow(IOException.class).when(impexWriterService).write(Mockito.any());
 
@@ -87,17 +87,16 @@ public class ImpexBuilderServiceTests {
 
         ImpexExporter impexExporter = Mockito.mock(ImpexExporter.class);
 
-        Mockito.when(impexExporterService.buildImpexExporter(Mockito.any(), Mockito.anyInt())).thenReturn(impexExporter);
+        Mockito.when(impexExporterService.buildImpexExporter(Mockito.any())).thenReturn(impexExporter);
 
         ImpexBuilderDto impexBuilderDto = new ImpexBuilderDto();
         impexBuilderDto.setCategoryId(111L);
-        impexBuilderDto.setClassificationStartNumber(25);
 
         impexBuilderService.buildImpex(impexBuilderDto);
 
         Mockito.verify(categoryRepository).findById(impexBuilderDto.getCategoryId());
 
-        Mockito.verify(impexExporterService).buildImpexExporter(category, impexBuilderDto.getClassificationStartNumber());
+        Mockito.verify(impexExporterService).buildImpexExporter(category);
 
         Mockito.verify(impexWriterService).write(impexExporter);
     }

@@ -40,14 +40,14 @@ public class ImpexExporterService {
         this.fieldMapper = fieldMapper;
     }
 
-    public ImpexExporter buildImpexExporter(Category puCategory, int classificationStartNumber) throws RecursionDepthException{
+    public ImpexExporter buildImpexExporter(Category puCategory) throws RecursionDepthException{
         ImpexExporter impexExporter = new ImpexExporter();
         int categoryDepth = 1;
 
         LOG.info("Start building impex exporter ...");
         long start = System.currentTimeMillis();
 
-        handleCategories(puCategory, impexExporter, categoryDepth, classificationStartNumber, null);
+        handleCategories(puCategory, impexExporter, categoryDepth, null);
 
         long end = System.currentTimeMillis();
         long time = end - start;
@@ -65,18 +65,16 @@ public class ImpexExporterService {
      * @param depth
      * @throws RecursionDepthException
      */
-    private void handleCategories(Category category, ImpexExporter impexExporter, int depth, int classificationNumber, String parentClassificationCode) throws RecursionDepthException {
+    private void handleCategories(Category category, ImpexExporter impexExporter, int depth, String parentClassificationCode) throws RecursionDepthException {
         if (depth > MAX_DEPTH) {
             throw new RecursionDepthException("Categories should only be on 4 levels (PU,PF,PSF,PSSF).");
         }
 
-        final String classificationCode = CLASSIFICATION_CODE_START + classificationNumber;
+        final String classificationCode = CLASSIFICATION_CODE_START + "_" + category.getCode();
 
-        int childClassificationCode = classificationNumber;
         for (Category childCategory : category.getChildren()) {
-            childClassificationCode += 1;
 
-            handleCategories(childCategory, impexExporter, depth + 1, childClassificationCode, classificationCode);
+            handleCategories(childCategory, impexExporter, depth + 1, classificationCode);
 
             impexExporter.getCategoryToCategory().add(
                     new CategoryCategoryRelation(category.getCode(), childCategory.getCode())
@@ -107,7 +105,7 @@ public class ImpexExporterService {
             classAttributeAssignment = new ClassAttributeAssignment();
             classAttributeAssignment.setClassCode(classificationCode);
             classAttributeAssignment.setAttributeCode(attribute.getCode());
-            classAttributeAssignment.setAttributeType(attribute.getType().name());
+            classAttributeAssignment.setAttributeType(attribute.getType().name().toLowerCase());
             // TODO implement mandatory
             classAttributeAssignment.setMandatory(false);
 
