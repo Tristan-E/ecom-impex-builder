@@ -131,9 +131,7 @@ public class ImpexExporterService {
                         classificationAttributeValueMapper.attributeValueToClassificationAttributeValue(value)
                 );
             }
-        }
 
-        if (classAttributeAssignment != null) {
             impexExporter.getClassAttributeAssignments().add(classAttributeAssignment);
         }
     }
